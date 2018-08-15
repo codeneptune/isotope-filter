@@ -1,6 +1,37 @@
-/*
- Isotope Filter
- Author: CodeNeptune
+/*!
+ *
+ * Isotope Filter (https://github.com/codeneptune/isotope-filter)
+ * Author: CodeNeptune
+ *
+ */
 
-*/
-(function(a){a.fn.isotopeFilter=function(){return this.each(function(){var d=a(this),e=a(d.data("filter")),b;e.isotope({itemSelector:"[data-filter-by]"});d.on("click","[data-filter-to]",function(c){c.preventDefault();c=a(this);b=a(this).data("filter-to");b="*"===b?"*":'[data-filter-by~="'+b+'"]';e.isotope({filter:b});c.addClass("active").siblings("[data-filter-to]").removeClass("active")})})}})(jQuery);
+(function ($) {
+    'use strict';
+    
+    $.fn.isotopeFilter = function () {
+        return this.each(function () {
+            var $el = $(this),
+                $target = $( $el.data('filter') ),
+                $sel;
+            
+            $target.isotope({
+                itemSelector: '[data-filter-by]'
+            });
+            
+            $el.on('click', '[data-filter-to]', function (e) {
+                e.preventDefault();
+                
+                var $filter_to = $(this);
+                
+                $sel = $(this).data('filter-to');
+                $sel = $sel === '*' ? '*' : '[data-filter-by~="' + $sel +'"]';
+                
+                $target.isotope({
+                    filter: $sel
+                });
+                
+                $filter_to.addClass('active').siblings('[data-filter-to]').removeClass('active');
+            });
+        });
+    };
+}(jQuery));
